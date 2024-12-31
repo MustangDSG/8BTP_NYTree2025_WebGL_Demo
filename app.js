@@ -39,7 +39,7 @@ function createTree() {
 // Создание текстурированного снега
 function createSnowGround() {
     const snowTextureLoader = new THREE.TextureLoader();
-    const snowTexture = snowTextureLoader.load('textures/1caba4af8810ec4796dfac8eab2c0119.jpg'); // Замените на путь к вашей текстуре
+    const snowTexture = snowTextureLoader.load('./data/textures/1caba4af8810ec4796dfac8eab2c0119.jpg'); // Замените на путь к вашей текстуре
 
     const snowMaterial = new THREE.MeshBasicMaterial({ map: snowTexture });
     const snowGeometry = new THREE.PlaneGeometry(300, 300); // Размер плоскости
@@ -120,7 +120,7 @@ function createSnowstorm() {
 
     // Загрузка текстуры снежинки
     const snowflakeTextureLoader = new THREE.TextureLoader();
-    const snowflakeTexture = snowflakeTextureLoader.load('textures/ice-pngrepo-com_white.png'); // Замените на путь к вашей текстуре
+    const snowflakeTexture = snowflakeTextureLoader.load('./data/textures/ice-pngrepo-com_white.png'); // Замените на путь к вашей текстуре
 
     const particleMaterial = new THREE.PointsMaterial({
         size: 0.07,
