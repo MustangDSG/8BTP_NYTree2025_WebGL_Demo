@@ -51,6 +51,15 @@ function createSnowGround() {
 }
 
 // Создаем огни
+function createColorIterator(colors) {
+    let index = 0; // Хранит текущий индекс цвета
+    return function() {
+        const color = colors[index]; // Получаем текущий цвет
+        index = (index + 1) % colors.length; // Увеличиваем индекс и сбрасываем его при необходимости
+        return color; // Возвращаем цвет
+    };
+}
+
 function createLights() {
     const lightGeometry = new THREE.SphereGeometry(0.05, 16, 16);
     const lightPositions = []; // Массив для хранения позиций огней
@@ -70,6 +79,8 @@ function createLights() {
         0x800080  // фиолетовый
     ];
 
+    const getNextColor = createColorIterator(colors); // Создаем итератор цветов
+
     for (let i = 0; i < branchCount; i++) {
         const radius = radiusStep - i * 0.33; // Уменьшаем радиус для более плотного расположения
         const yPosition = -1 + (i * heightStep); // Высота текущей ветви
@@ -86,10 +97,7 @@ function createLights() {
 
     // Создаем огни на определенных позициях с цветами из списка
     lightPositions.forEach(position => {
-        // Случайный выбор цвета из массива colors
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
-        const lightMaterial = new THREE.MeshBasicMaterial({ color: randomColor });
+        const lightMaterial = new THREE.MeshBasicMaterial({ color: getNextColor() }); // Получаем цвет от итератора
         const light = new THREE.Mesh(lightGeometry, lightMaterial);
         
         light.position.set(position.x, position.y, position.z);
@@ -97,7 +105,7 @@ function createLights() {
 
         // Функция для смены цвета огня
         function changeColor() {
-            const newColor = colors[Math.floor(Math.random() * colors.length)];
+            const newColor = getNextColor(); // Получаем новый цвет от итератора
             light.material.color.set(newColor); // Устанавливаем новый цвет огня
         }
 
